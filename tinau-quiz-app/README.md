@@ -167,6 +167,26 @@ cd frontend
 pnpm dev
 ```
 
+### Option 3 — Vercel (frontend + REST API proxy)
+
+This repository includes a Vercel configuration for the frontend and API proxying.
+It is best used for the frontend and REST API endpoints. Because Vercel serverless functions are not ideal for long-lived Socket.io connections and uploaded media, the full real-time app should still be hosted on Docker or a container-friendly platform.
+
+To deploy the frontend to Vercel:
+
+1. Create a Vercel project from this repository.
+2. Make sure `vercel.json` remains in the project root.
+3. Leave `VITE_API_URL` unset for Vercel so the app uses the relative `/api` path.
+4. Set any required secrets for the backend if you also deploy the API separately:
+   - `MONGO_URI`
+   - `JWT_SECRET`
+   - `ADMIN_EMAIL`
+   - `ADMIN_PASS`
+
+> Note: The backend can be imported as a Vercel API route, but full Socket.io realtime behavior is not guaranteed on Vercel. Use Docker Compose or a dedicated container platform for production real-time hosting.
+
+For full deployment instructions, see `DEPLOYMENT.md`.
+
 ---
 
 ## 🔑 Default Credentials Summary

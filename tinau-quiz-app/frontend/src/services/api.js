@@ -2,9 +2,10 @@ import axios from "axios";
 
 // In Docker, the frontend is served to the browser, so it must call the
 // backend on the host-exposed port, not the internal container name.
+// On Vercel, the backend is available relative to the same domain at /api.
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
-  `${window.location.protocol}//${window.location.hostname}:5000/api`;
+  "/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
