@@ -88,9 +88,8 @@ const start = async () => {
   });
 };
 
-if (process.env.VERCEL) {
-  module.exports = { app, server, io };
-} else {
+if (require.main === module) {
   start();
-  module.exports = { app, server, io };
 }
+
+module.exports = { app, server, io };

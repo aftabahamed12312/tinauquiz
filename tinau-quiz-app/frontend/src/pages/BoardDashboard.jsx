@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Timer from "../components/Timer";
 import MediaViewer from "../components/MediaViewer";
@@ -13,6 +14,7 @@ import { listHouses, listRounds } from "../services/api";
  * live scoreboard, and answer reveals. Read-only, no auth required.
  */
 export default function BoardDashboard() {
+  const navigate = useNavigate();
   const [houses, setHouses] = useState([]);
   const [activeQuestion, setActiveQuestion] = useState(null);
   const [revealed, setRevealed] = useState(null);
@@ -109,26 +111,35 @@ export default function BoardDashboard() {
       <Header
         subtitle={activeRound ? activeRound.name : "Butwal-11, Devinagar"}
         right={
-          <span
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              color: "white",
-              fontSize: "0.8rem",
-              fontWeight: 600,
-            }}
-          >
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <button
+              className="btn btn-secondary"
+              style={{ padding: "8px 14px", fontSize: "0.85rem" }}
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
             <span
               style={{
-                width: 10,
-                height: 10,
-                borderRadius: "50%",
-                background: connected ? "#4ade80" : "#f87171",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                color: "white",
+                fontSize: "0.8rem",
+                fontWeight: 600,
               }}
-            />
-            {connected ? "Live" : "Reconnecting…"}
-          </span>
+            >
+              <span
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: connected ? "#4ade80" : "#f87171",
+                }}
+              />
+              {connected ? "Live" : "Reconnecting…"}
+            </span>
+          </div>
         }
       />
 
