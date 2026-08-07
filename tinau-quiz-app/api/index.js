@@ -1,8 +1,16 @@
 const connectDB = require("../backend/src/config/db");
+const seedAdmin = require("../backend/src/config/seedAdmin");
 const app = require("../backend/src/app");
 
-connectDB().catch((err) => {
-  console.error("Failed to connect to MongoDB:", err);
-});
+const initializeServerless = async () => {
+  try {
+    await connectDB();
+    await seedAdmin();
+  } catch (err) {
+    console.error("Serverless startup error:", err);
+  }
+};
+
+initializeServerless();
 
 module.exports = app;
