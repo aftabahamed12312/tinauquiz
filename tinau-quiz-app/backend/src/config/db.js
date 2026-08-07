@@ -7,10 +7,9 @@ if (!cached) {
 
 /**
  * Establishes connection to MongoDB.
- * Retries a few times on startup since in Docker Compose the app
- * container can boot before the mongo container is ready to accept connections.
+ * Uses a global cache so serverless functions reuse the same client across invocations.
  */
-const connectDB = async (retries = 8, delayMs = 3000) => {
+const connectDB = async (retries = 3, delayMs = 2000) => {
   if (cached.conn) {
     return cached.conn;
   }
@@ -24,8 +23,20 @@ const connectDB = async (retries = 8, delayMs = 3000) => {
           const conn = await mongoose.connect(uri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
+            maxPoolSize: 5,
+            family: 4,
           });
-          console.log(`✅ MongoDB connected: ${uri}`);
+
+          mongoose.connection.on("connected", () => {
+            console.log(`✅ MongoDB connected: ${uri}`);
+          });
+
+          mongoose.connection.on("error", (err) => {
+            console.error(`❌ MongoDB connection error: ${err.message}`);
+          });
+
           cached.conn = conn;
           return conn;
         } catch (err) {

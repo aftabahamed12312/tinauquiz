@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const mongoose = require("mongoose");
 
 const authRoutes = require("./routes/authRoutes");
 const houseRoutes = require("./routes/houseRoutes");
@@ -42,8 +43,19 @@ app.use((req, res, next) => {
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
-app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", service: "tinau-quiz-backend", time: new Date().toISOString() });
+app.get("/api/health", async (req, res) => {
+  const mongoStatus = mongoose.connection.readyState;
+  const isMongoConnected = mongoStatus === 1;
+
+  res.status(isMongoConnected ? 200 : 503).json({
+    status: isMongoConnected ? "ok" : "unavailable",
+    service: "tinau-quiz-backend",
+    database: {
+      readyState: mongoStatus,
+      connected: isMongoConnected,
+    },
+    time: new Date().toISOString(),
+  });
 });
 
 const seedRoutes = require("./routes/seedRoutes");
