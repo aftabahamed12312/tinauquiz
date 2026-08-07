@@ -183,11 +183,13 @@ To deploy the frontend to Vercel:
 4. Make sure `vercel.json` remains in the project root.
 5. Leave `VITE_API_URL` unset for Vercel so the app uses the relative `/api` path.
 6. Set these required secrets in Vercel:
-   - `MONGO_URI` = your MongoDB Atlas connection string
+   - `MONGO_URI` or `MONGODB_URI` = your MongoDB Atlas connection string
    - `JWT_SECRET` = your JWT secret
    - `ADMIN_EMAIL` = `ADMIN@tinau.com`
    - `ADMIN_PASS` = `tebs@2056`
    - `SEED_SECRET` = a one-time admin seed secret
+
+> Make sure your Atlas password is URL-encoded if it contains special characters. For example: `P@ssw0rd!` becomes `P%40ssw0rd%21`.
 
 Example Vercel environment variables:
 

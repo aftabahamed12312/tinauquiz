@@ -61,7 +61,7 @@ This setup is intended for frontend deployment and proxying REST API requests to
 3. Pull the latest Vercel environment variables locally with `vercel env pull`.
 4. Ensure the project root contains `vercel.json` and `api/index.js`.
 5. Set any required Vercel environment variables if you deploy the backend APIs:
-   - `MONGO_URI`
+   - `MONGO_URI` or `MONGODB_URI`
    - `JWT_SECRET`
    - `ADMIN_EMAIL`
    - `ADMIN_PASS`
@@ -69,6 +69,7 @@ This setup is intended for frontend deployment and proxying REST API requests to
 #### MongoDB Atlas notes
 - Use an Atlas URI like:
   `mongodb+srv://<username>:<password>@cluster0.mongodb.net/tinau_quiz?retryWrites=true&w=majority`
+- If your password has special characters, URL-encode them before placing the value in the URI.
 - Ensure the Atlas user has read/write access to the `tinau_quiz` database.
 - Add Atlas network access for your environment:
   - for testing: `0.0.0.0/0` temporarily

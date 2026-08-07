@@ -14,7 +14,14 @@ const connectDB = async (retries = 3, delayMs = 2000) => {
     return cached.conn;
   }
 
-  const uri = process.env.MONGO_URI || "mongodb://localhost:27017/tinau_quiz";
+  const uri = process.env.MONGO_URI || process.env.MONGODB_URI || "mongodb://localhost:27017/tinau_quiz";
+  const uriSource = process.env.MONGO_URI
+    ? "MONGO_URI"
+    : process.env.MONGODB_URI
+    ? "MONGODB_URI"
+    : "default local MongoDB";
+
+  console.log(`🔗 MongoDB URI source: ${uriSource}`);
 
   if (!cached.promise) {
     cached.promise = (async () => {

@@ -9,7 +9,23 @@ const topicRoutes = require("./routes/topicRoutes");
 const roundRoutes = require("./routes/roundRoutes");
 const questionRoutes = require("./routes/questionRoutes");
 
-const app = express();
+const POST /api/seed-admin
+Content-Type: application/json
+{
+  "secret": "<your SEED_SECRET>"
+}POST /api/seed-admin
+Content-Type: application/json
+{
+  "secret": "<your SEED_SECRET>"
+}POST /api/seed-admin
+Content-Type: application/json
+{
+  "secret": "<your SEED_SECRET>"
+}POST /api/seed-admin
+Content-Type: application/json
+{
+  "secret": "<your SEED_SECRET>"
+}app = express();
 
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
 const localNetworkOriginRegexp = /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)(:\d+)?$/;
