@@ -66,6 +66,14 @@ This setup is intended for frontend deployment and proxying REST API requests to
    - `ADMIN_EMAIL`
    - `ADMIN_PASS`
 
+#### MongoDB Atlas notes
+- Use an Atlas URI like:
+  `mongodb+srv://<username>:<password>@cluster0.mongodb.net/tinau_quiz?retryWrites=true&w=majority`
+- Ensure the Atlas user has read/write access to the `tinau_quiz` database.
+- Add Atlas network access for your environment:
+  - for testing: `0.0.0.0/0` temporarily
+  - for Vercel: configure the Atlas access list for Vercel or use `0.0.0.0/0` while validating
+
 ### Build settings
 
 Vercel should use the default settings from `vercel.json`:

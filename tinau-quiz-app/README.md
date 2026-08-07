@@ -156,10 +156,13 @@ The default admin account is seeded automatically on first backend startup.
 ```bash
 pnpm install --recursive
 
-# Start MongoDB locally (or via `docker run -p 27017:27017 mongo:7`)
+# Start MongoDB locally or use Atlas:
+# - Local MongoDB: mongodb://localhost:27017/tinau_quiz
+# - Atlas: mongodb+srv://<username>:<password>@cluster0.mongodb.net/tinau_quiz?retryWrites=true&w=majority
 
 cd backend
-cp ../.env.example .env
+cp .env.example .env
+# Edit backend/.env and set MONGO_URI, JWT_SECRET, ADMIN_EMAIL, ADMIN_PASS
 pnpm dev
 
 # in a second terminal
