@@ -50,12 +50,15 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", service: "tinau-quiz-backend", time: new Date().toISOString() });
 });
 
+const seedRoutes = require("./routes/seedRoutes");
+
 app.use("/api/auth", authRoutes);
 app.use("/api/houses", houseRoutes);
 app.use("/api/topics", topicRoutes);
 app.use("/api/rounds", roundRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/quiz", questionRoutes.timerRouter);
+app.use("/api", seedRoutes);
 
 app.use("/api", (req, res) => {
   res.status(404).json({ message: "API route not found" });
