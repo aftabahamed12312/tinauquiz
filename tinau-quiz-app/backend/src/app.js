@@ -11,13 +11,21 @@ const questionRoutes = require("./routes/questionRoutes");
 const app = express();
 
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
+const VERCEL_URL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null;
 const localNetworkOriginRegexp = /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)(:\d+)?$/;
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
-    if (origin === CLIENT_URL || localNetworkOriginRegexp.test(origin)) {
+
+    const allowedOrigins = new Set([
+      CLIENT_URL,
+      VERCEL_URL,
+    ].filter(Boolean));
+
+    if (allowedOrigins.has(origin) || localNetworkOriginRegexp.test(origin)) {
       return callback(null, true);
     }
+
     callback(new Error(`CORS not allowed by server: ${origin}`));
   },
   methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
