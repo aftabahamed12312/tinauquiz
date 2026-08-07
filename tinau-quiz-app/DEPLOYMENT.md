@@ -57,8 +57,10 @@ This setup is intended for frontend deployment and proxying REST API requests to
 ### Recommended Vercel configuration
 
 1. Connect the repository to Vercel.
-2. Ensure the project root contains `vercel.json` and `api/index.js`.
-3. Set any required Vercel environment variables if you deploy the backend APIs:
+2. Run `vercel link` in your project root to link the local repo to the Vercel project.
+3. Pull the latest Vercel environment variables locally with `vercel env pull`.
+4. Ensure the project root contains `vercel.json` and `api/index.js`.
+5. Set any required Vercel environment variables if you deploy the backend APIs:
    - `MONGO_URI`
    - `JWT_SECRET`
    - `ADMIN_EMAIL`
@@ -73,12 +75,14 @@ Vercel should use the default settings from `vercel.json`:
 
 ### Important caveats
 
+- This repository is a Vite + Express app, not a Next.js starter. If you want a Next.js example with MongoDB, use `npx create-next-app --example with-mongodb <project-name>`.
 - The backend API can be served as a Vercel function for basic REST routes, but Vercel serverless functions do not support persistent Socket.io websocket connections.
 - Socket.io requires a long-running socket server, so full realtime support should use Docker Compose or another container runtime where your backend stays online continuously.
 - If you run the frontend on Vercel and backend elsewhere, set environment variables:
   - `VITE_API_URL=https://your-backend-url/api`
   - `VITE_SOCKET_URL=https://your-backend-url`
 - The frontend uses relative `/api` URLs by default for same-origin Vercel hosting.
+- For MongoDB on Vercel Functions, connection pool management is important to avoid leaking serverless connections. This project already uses a singleton-like DB connection cache in `backend/src/config/db.js`.
 
 ---
 

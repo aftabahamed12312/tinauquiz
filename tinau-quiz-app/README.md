@@ -175,9 +175,11 @@ It is best used for the frontend and REST API endpoints. Because Vercel serverle
 To deploy the frontend to Vercel:
 
 1. Create a Vercel project from this repository.
-2. Make sure `vercel.json` remains in the project root.
-3. Leave `VITE_API_URL` unset for Vercel so the app uses the relative `/api` path.
-4. Set these required secrets in Vercel:
+2. Run `vercel link` in the project root to link the local repo to the Vercel project.
+3. Run `vercel env pull` to sync the latest Vercel environment variables locally.
+4. Make sure `vercel.json` remains in the project root.
+5. Leave `VITE_API_URL` unset for Vercel so the app uses the relative `/api` path.
+6. Set these required secrets in Vercel:
    - `MONGO_URI` = your MongoDB Atlas connection string
    - `JWT_SECRET` = your JWT secret
    - `ADMIN_EMAIL` = `ADMIN@tinau.com`
