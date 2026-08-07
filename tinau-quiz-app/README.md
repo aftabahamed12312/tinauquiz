@@ -177,13 +177,31 @@ To deploy the frontend to Vercel:
 1. Create a Vercel project from this repository.
 2. Make sure `vercel.json` remains in the project root.
 3. Leave `VITE_API_URL` unset for Vercel so the app uses the relative `/api` path.
-4. Set any required secrets for the backend if you also deploy the API separately:
-   - `MONGO_URI`
-   - `JWT_SECRET`
-   - `ADMIN_EMAIL`
-   - `ADMIN_PASS`
+4. Set these required secrets in Vercel:
+   - `MONGO_URI` = your MongoDB Atlas connection string
+   - `JWT_SECRET` = your JWT secret
+   - `ADMIN_EMAIL` = `ADMIN@tinau.com`
+   - `ADMIN_PASS` = `tebs@2056`
+   - `SEED_SECRET` = a one-time admin seed secret
 
-> Note: The backend can be imported as a Vercel API route, but full Socket.io realtime behavior is not guaranteed on Vercel. Use Docker Compose or a dedicated container platform for production real-time hosting.
+Example Vercel environment variables:
+
+```env
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/tinau_quiz?retryWrites=true&w=majority
+JWT_SECRET=your_jwt_secret_here
+ADMIN_EMAIL=ADMIN@tinau.com
+ADMIN_PASS=tebs@2056
+CLIENT_URL=https://your-frontend-url.vercel.app
+SEED_SECRET=your_seed_secret_here
+```
+
+If you are deploying locally or want a helper command, use `deploy.sh`:
+
+```bash
+bash deploy.sh
+```
+
+> WARNING: Vercel serverless functions do not support persistent Socket.io websocket connections. This project’s realtime Socket.io functionality should be hosted on Docker Compose or a separate container platform for production use.
 
 For full deployment instructions, see `DEPLOYMENT.md`.
 

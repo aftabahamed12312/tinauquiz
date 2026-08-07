@@ -11,19 +11,15 @@ const questionRoutes = require("./routes/questionRoutes");
 const app = express();
 
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000";
-const VERCEL_URL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null;
-const vercelOriginRegexp = /^https:\/\/([a-z0-9-]+\.)?vercel\.app$/;
 const localNetworkOriginRegexp = /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)(:\d+)?$/;
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
 
-    const allowedOrigins = new Set([
-      CLIENT_URL,
-      VERCEL_URL,
-    ].filter(Boolean));
+    const allowedOrigins = new Set([CLIENT_URL]);
+    const isVercelOrigin = origin.endsWith(".vercel.app");
 
-    if (allowedOrigins.has(origin) || vercelOriginRegexp.test(origin) || localNetworkOriginRegexp.test(origin)) {
+    if (allowedOrigins.has(origin) || isVercelOrigin || localNetworkOriginRegexp.test(origin)) {
       return callback(null, true);
     }
 

@@ -73,9 +73,12 @@ Vercel should use the default settings from `vercel.json`:
 
 ### Important caveats
 
-- The backend API can be served as a Vercel function, but Socket.io is not a good fit for serverless functions.
-- If you need real-time Socket.io support, use Docker Compose or another container runtime instead of Vercel.
-- The frontend uses relative `/api` URLs by default, so it works automatically on Vercel.
+- The backend API can be served as a Vercel function for basic REST routes, but Vercel serverless functions do not support persistent Socket.io websocket connections.
+- Socket.io requires a long-running socket server, so full realtime support should use Docker Compose or another container runtime where your backend stays online continuously.
+- If you run the frontend on Vercel and backend elsewhere, set environment variables:
+  - `VITE_API_URL=https://your-backend-url/api`
+  - `VITE_SOCKET_URL=https://your-backend-url`
+- The frontend uses relative `/api` URLs by default for same-origin Vercel hosting.
 
 ---
 
